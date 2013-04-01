@@ -27,3 +27,22 @@ module Types =
                     Summary = summary'
                 }
 
+        [<CLIMutableAttribute>]
+        type Snippet =
+            {
+                _id         : ObjectId
+                Link        : string
+                Title       : string
+                Description : string
+                Date        : DateTime
+            }
+
+            static member Make link title description =
+                {
+                    _id         = ObjectId.GenerateNewId()
+                    Link        = link
+                    Title       = title
+                    Description = description
+                    Date        = DateTime.Now
+                }
+

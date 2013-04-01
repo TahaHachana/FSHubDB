@@ -7,6 +7,7 @@ module Main =
     open System.Timers
     open Types
     open Mongo
+    open Snippets
 
     let checkNewQuestions dateTime =
         let path = "Questions.txt"
@@ -17,8 +18,8 @@ module Main =
         match count with
             | 0 -> ()
             | _ ->
-//                Collections.insertQuestions newQuestions
-                newQuestions |> Array.iter (fun x -> printfn "%s" x.Link)
+                Collections.insertQuestions newQuestions
+//                newQuestions |> Array.iter (fun x -> printfn "%s" x.Link)
                 let links = questions |> Array.map (fun x -> x.Link)
                 File.WriteAllLines(path, links)
                 printfn "%s: %d new question(s)" dateTime count        
@@ -26,8 +27,9 @@ module Main =
     let populateDb _ =
         let now = DateTime.Now.ToString()
         checkNewQuestions now
+        checkNewSnippets now
         
-    let timer = new Timer(300000.)
+    let timer = new Timer(900000.)
     timer.Enabled <- true
     timer.Elapsed |> Event.add populateDb
     

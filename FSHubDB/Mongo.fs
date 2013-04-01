@@ -29,7 +29,9 @@ module Mongo =
     module Collections =
 
         let questions = Database.collectionByName<Question> "questions"
-
+        let snippets = Database.collectionByName<Snippet> "snippets"
+        
         let insert (mongoCollection : MongoCollection) records = mongoCollection.InsertBatch records |> ignore
 
         let insertQuestions records = insert questions records
+        let insertSnippets records = insert snippets records
