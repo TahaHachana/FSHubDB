@@ -30,8 +30,10 @@ module Mongo =
 
         let questions = Database.collectionByName<Question> "questions"
         let snippets = Database.collectionByName<Snippet> "snippets"
-        
+        let tweets = Database.collectionByName<Tweet> "tweets"
+
         let insert (mongoCollection : MongoCollection) records = mongoCollection.InsertBatch records |> ignore
 
         let insertQuestions records = insert questions records
         let insertSnippets records = insert snippets records
+        let insertTweets records = insert tweets records

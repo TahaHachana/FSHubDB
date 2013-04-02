@@ -45,8 +45,12 @@
     <Compile Include="Rss.fs" />
     <Compile Include="Questions.fs" />
     <Compile Include="Snippets.fs" />
+    <Compile Include="Twitter.fs" />
     <Compile Include="Main.fs" />
     <None Include="packages.config" />
+    <None Include="app.config" />
+    <Content Include="Twitterizer2.license.txt" />
+    <Content Include="GettingStarted.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Data">
@@ -69,6 +73,9 @@
     <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -76,6 +83,17 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Twitterizer2, Version=2.4.2.20976, Culture=neutral, PublicKeyToken=69d1469eac671567">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Twitterizer2.Asynchronous">
+      <HintPath>packages\twitterizer.2.4.1.1\lib\net40\Twitterizer2.Asynchronous.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Twitterizer2.Streaming">
+      <HintPath>packages\twitterizer.2.4.1.1\lib\net40\Twitterizer2.Streaming.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

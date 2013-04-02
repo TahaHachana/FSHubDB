@@ -8,6 +8,7 @@ module Main =
     open Types
     open Mongo
     open Snippets
+    open Twitter
 
     let checkNewQuestions dateTime =
         let path = "Questions.txt"
@@ -26,8 +27,13 @@ module Main =
 
     let populateDb _ =
         let now = DateTime.Now.ToString()
+        printfn "Checking new questions ..."
         checkNewQuestions now
+        printfn "Checking new snippets ..."
         checkNewSnippets now
+        printfn "Checking new tweets ..."
+        checkNewTweets now
+        printfn "Done"
         
     let timer = new Timer(900000.)
     timer.Enabled <- true

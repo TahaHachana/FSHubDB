@@ -55,4 +55,4 @@ module Snippets =
 //                    |> Array.iter (fun x -> printfn "%A" x)
                 let links = snippets |> Array.map (fun x -> x.Link)
                 File.WriteAllLines(path, links)
-                printfn "%s: %d new snippet(s)" datetime count        
+                printfn "%s: %d new snippet(s)" datetime count      
