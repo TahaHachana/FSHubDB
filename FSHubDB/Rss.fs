@@ -9,7 +9,7 @@ module Rss =
     open Utils
     open Types
 
-    let load (uri : string) = Option.tryWith <| XDocument.Load uri
+    let load (uri : string) = try XDocument.Load uri |> Some with _ -> None
 
     let elementsByName (xdocument : XDocument) localName =
         query {

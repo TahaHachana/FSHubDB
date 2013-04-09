@@ -4,10 +4,6 @@ module Utils =
 
     open System.Text.RegularExpressions
 
-    module Option =
-
-        let tryWith f = try f |> Some with _ -> None
-
     let charRegex = Regex("\p{P}? .{1}", RegexOptions.Compiled ||| RegexOptions.RightToLeft)
 
     let stripTrailingChars str =

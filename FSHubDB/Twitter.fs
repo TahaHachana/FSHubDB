@@ -68,19 +68,34 @@ module Twitter =
     let notBlacklisted profile = Array.exists (fun x -> x = profile) blacklist = false
      
     let options = SearchOptions()
-    options.NumberPerPage <- 50
+    options.NumberPerPage <- 100
+
+    open FSharp.Data
+
+    type TwitterJson = JsonProvider<"http://search.twitter.com/search.json?q=%23fsharp&rpp=100">
 
     let latest() =
         try
-            let search = TwitterSearch.Search("#fsharp", options)
-            [for x in search.ResponseObject -> x]
-            |> List.map (fun x ->
-                let tweetId = x.Id.ToString()
-                let userId = x.FromUserId.ToString()
-                Tweet.Make tweetId userId x.ProfileImageLocation x.FromUserDisplayName x.FromUserScreenName x.CreatedDate x.Text)
-            |> List.filter (fun x -> notBlacklisted x.DisplayName)
+            let feed = TwitterJson.GetSample()
+            feed.Results
+            |> Array.map (fun result ->
+                let tweetId = result.Id.ToString()
+                let userId = result.FromUserId.ToString()
+                Tweet.Make tweetId userId result.ProfileImageUrl result.FromUserName result.FromUser result.CreatedAt result.Text)
+            |> Array.filter (fun x -> notBlacklisted x.DisplayName)
             |> Some
         with _ -> None
+                
+//        try
+//            let search = TwitterSearch.Search("#fsharp", options)
+//            [for x in search.ResponseObject -> x]
+//            |> List.map (fun x ->
+//                let tweetId = x.Id.ToString()
+//                let userId = x.FromUserId.ToString()
+//                Tweet.Make tweetId userId x.ProfileImageLocation x.FromUserDisplayName x.FromUserScreenName x.CreatedDate x.Text)
+//            |> List.filter (fun x -> notBlacklisted x.DisplayName)
+//            |> Some
+//        with _ -> None
 
     let checkNewTweets datetime =
         let path = "Tweets.txt"
@@ -89,13 +104,13 @@ module Twitter =
             | None        -> ()
             | Some tweets ->
                 let oldIds = File.ReadAllLines path
-                let newTweets = tweets |> List.filter (fun x -> Array.exists (fun y -> y = x.TweetID) oldIds = false)
+                let newTweets = tweets |> Array.filter (fun x -> Array.exists (fun y -> y = x.TweetID) oldIds = false)
                 let length = newTweets.Length
                 match length with
                     | 0 -> ()
                     | _ ->
                         Collections.insertTweets newTweets
 //                        newTweets |> List.iter (fun x -> printfn "%s" x.TweetID)
-                        let ids = tweets |> List.map (fun x -> x.TweetID)
+                        let ids = tweets |> Array.map (fun x -> x.TweetID)
                         File.WriteAllLines(path, ids)
                         printfn "%s: %d new tweet(s)" datetime length
